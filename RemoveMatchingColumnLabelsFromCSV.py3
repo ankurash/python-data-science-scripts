@@ -47,11 +47,14 @@ def main():
 
     #Change runForSingleFile to True and sampleFile to the filename of the single file, if you want to run for single file
     runForSingleFile = False
-    sampleFile = "Adjacency_7thNov_6thDec2017.csv"
+    sampleFile = "SampleURLList.csv"
 
     starttime = time.time()
     if(runForSingleFile == True):
-        RemoveMatchingColumnLabelsFromCSV(sampleFile, OutputDir)
+        if sampleFile.lower().endswith(".csv"):
+            RemoveMatchingColumnLabelsFromCSV(sampleFile, OutputDir)
+        else:
+            print(sampleFile,"is not a csv file.")
     else:
         try:
             processes = [mp.Process(target=RemoveMatchingColumnLabelsFromCSV, args=(sampleFile, OutputDir)) for sampleFile in os.listdir(inputdir) if sampleFile.lower().endswith(".csv")]
